@@ -1,0 +1,27 @@
+# 
+# /etc/ssh/sshd_config
+# 
+Protocol 2                  # wir wollen nur v2
+PubkeyAuthentication yes    # pubkey auth
+
+# und nur pubkey auth
+HostbasedAuthentication no
+PasswordAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+
+# defaults 
+UsePAM yes
+PrintMotd no
+PrintLastLog no
+AllowTcpForwarding no
+GatewayPorts no
+X11Forwarding no
+
+# aber den sftp server mögen wir
+Subsystem sftp /usr/lib64/misc/sftp-server
+
+# login für scp user
+Match Group scponly
+  ChrootDirectory %h
+  ForceCommand internal-sftp
